@@ -32,7 +32,8 @@ function M.get_formatted(input)
         cmd = "jq . " .. temp_file_path
         result = vim.fn.system(cmd)
     else
-        cmd = string.format("echo '%s' | jq .", input)
+        write_to_temp(input)
+        cmd = "jq . -e " .. temp_file_path
         result = vim.fn.system(cmd)
     end
 
@@ -51,11 +52,11 @@ function M.get_collapsed(input)
         result = vim.fn.system(cmd)
         result = vim.fn.substitute(result, [[\n]], "", "g")
     else
-        cmd = string.format("echo '%s' | jq -c .", input)
+        write_to_temp(input)
+        cmd = "jq . -e " .. temp_file_path
         result = vim.fn.system(cmd)
-        result = result:gsub("[\n\r]", "")
+        result = result:gsub("\r?\n", "")
     end
-
     return result
 end
 
@@ -72,7 +73,8 @@ function M.get_rawed(input)
         result = vim.fn.system(cmd)
         result = vim.fn.substitute(result, [[\n]], "", "g")
     else
-        cmd = string.format("echo '%s' | jq -r .", input)
+        write_to_temp(input)
+        cmd = "jq . -r " .. temp_file_path
         result = vim.fn.system(cmd)
         result = result:gsub("[\n\r]", "")
     end
@@ -96,9 +98,9 @@ function M.is_valid(input)
 
         return exit_status == 0
     else
-        cmd = string.format("echo '%s' | jq -e .", input)
+        write_to_temp(input)
+        cmd = "jq . -e " .. temp_file_path .. "</dev/null"
         result = vim.fn.system(cmd)
-
         local exit_status = vim.v.shell_error
 
         return exit_status == 0
