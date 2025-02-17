@@ -13,10 +13,7 @@ local function write_to_temp(arg)
     end
     local tmp_file = temp_file_path .. os.time() .. (arg.operation and ("-" .. arg.operation .. ".json") or ".json")
     local f = io.open(tmp_file, "w")
-    -- if not f then
-    --     error("Failed to open file: " .. tmp_file)
-    -- end
-    f:write(input)
+    f:write(arg.input)
     f:close()
     return tmp_file
 end
