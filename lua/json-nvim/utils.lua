@@ -5,12 +5,6 @@ local M = {}
 
 function M.get_plugin_root()
     local file_separator = ""
-    if vim.fn.has("win32") == 1 then
-        file_separator = "\\"
-    else
-        file_separator = "/"
-    end
-
     local init_path = debug.getinfo(1).source
 
     if not init_path:find("\\") then
