@@ -1,6 +1,8 @@
 local utils = require("json-nvim.utils")
 
-local temp_file_path = utils.get_plugin_root() .. "tmp/"
+local temp_file_path, os_file_sep = utils.get_os_temp_file_path()
+
+temp_file_path = temp_file_path .. os_file_sep .. "json-nvim_"
 
 --write data to a temporary file in plugin root
 ---@param arg { input: string, operation: string }
