@@ -53,7 +53,7 @@ function M.get_collapsed(input)
         result = vim.fn.substitute(result, [[\n]], "", "g")
     else
         write_to_temp(input)
-        cmd = "jq . -e " .. temp_file_path
+        cmd = "jq -c . " .. temp_file_path
         result = vim.fn.system(cmd)
         result = result:gsub("\r?\n", "")
     end
