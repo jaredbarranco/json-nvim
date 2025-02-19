@@ -1,0 +1,23 @@
+name: Run Neovim Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Neovim
+        run: |
+          sudo apt update
+          sudo apt install -y neovim
+
+      - name: Run Lua Tests
+        run: nvim --headless -l tests/run_tests.lua
+
