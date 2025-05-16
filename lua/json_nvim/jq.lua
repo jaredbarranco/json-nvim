@@ -21,7 +21,7 @@ end
 local M = {}
 
 ---get all keys from json text
----this function is used for scase_switching feature
+---this function is used for case_switching feature
 ---@param json string
 ---@return string[]
 function M.get_keys(json)
