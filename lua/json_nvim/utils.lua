@@ -43,12 +43,12 @@ end
 function M.get_os_temp_file_path()
     local tmp_dir
     if vim.fn.has("win32") == 1 then
-        tmp_dir = os.getenv("TEMP")
+        tmp_dir = os.getenv("TEMP") or os.getenv("TMP")
+        if not tmp_dir then
+            error("json_nvim uses temp files. Either $TEMP or $TMP (Windows) must be defined")
+        end
     else
-        tmp_dir = os.getenv("TMPDIR")
-    end
-    if not tmp_dir then
-        error("json_nvim uses temp files. Either $TEMP (Windows) or $TMPDIR (Unix) must be defined")
+        tmp_dir = os.getenv("TMPDIR") or "/tmp"
     end
 
     return tmp_dir, get_os_file_separator()
